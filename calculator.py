@@ -15,7 +15,9 @@ class Calculator(object):
         paranthesisCount = {"(": 0, ")": 0}
         numbersOperatorsCount = {"numbers": 0, "operators": 0}
 
-        for index, char in enumerate(string.strip()):
+        previousChar = None
+
+        for char in string.strip():
             if not char.isdigit() and not char.isspace() and char not in validOperators:
                 isValid = False
             if char == "(":
@@ -23,15 +25,11 @@ class Calculator(object):
             elif char == ")":
                 paranthesisCount[")"] = paranthesisCount[")"] + 1
             if char.isdigit():
-                if index != 0:
-                    if string[index-1].isdigit():
-                        pass
-                    else:
-                        numbersOperatorsCount["numbers"] = numbersOperatorsCount["numbers"] + 1
-                else:
+                if previousChar is None or not previousChar.isdigit():
                     numbersOperatorsCount["numbers"] = numbersOperatorsCount["numbers"] + 1
             if char in ["+", "-", "*", "/"]:
                 numbersOperatorsCount["operators"] = numbersOperatorsCount["operators"] + 1
+            previousChar = char
 
         if paranthesisCount["("] != paranthesisCount[")"]:
             isValid = False
