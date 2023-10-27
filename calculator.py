@@ -21,6 +21,8 @@ class Calculator(object):
             if not char.isdigit() and not char.isspace() and char not in validOperators:
                 isValid = False
             if char == "(":
+                if  paranthesisCount[")"] > paranthesisCount["("]:
+                    isValid = False
                 paranthesisCount["("] = paranthesisCount["("] + 1
             elif char == ")":
                 paranthesisCount[")"] = paranthesisCount[")"] + 1
@@ -49,8 +51,10 @@ class Calculator(object):
         if operator == "*":
             return number1 * number2
         if operator == "/":
-            return number1 // number2
-
+            if number2 != 0:
+                return number1 // number2
+            else:
+                raise CalculatorException("Impartire la 0")
 
     def eval(self, string) :
         '''evaluates an infix arithmetic expression '''
